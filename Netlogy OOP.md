@@ -1,3 +1,6 @@
+from Tools.scripts.make_ctype import values
+
+
 class Student:
     def __init__(self, name, surname, gender):
         self.name = name
@@ -45,9 +48,16 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grades = {}
 
-    def __str__(self):
-        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.grades}'
+    def average(self):
+        total_subject_grades = 0
+        count_subject_grades = 0
+        for subject, value in self.grades():
+            total_subject_grades += sum(value)
+            count_subject_grades += len(value)
+        return total_subject_grades / count_subject_grades
 
+    def __str__(self):
+        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average(lecturer.grades)}'
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -118,3 +128,4 @@ print(some_student)
 # Средняя оценка за домашние задания: 9.9
 # Курсы в процессе изучения: Python, Git
 # Завершенные курсы: Введение в программирование
+
