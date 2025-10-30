@@ -19,8 +19,16 @@ class Student:
         else:
             return 'Ошибка'
 
+    def average_student(self):
+        total_subject_grades = 0
+        count_subject_grades = 0
+        for subject, value in self.grades.items():
+            total_subject_grades += sum(value)
+            count_subject_grades += len(value)
+        return total_subject_grades / count_subject_grades
+
     def __str__(self):
-        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.grades}\nКурсы в процессе изучения:{self.courses_in_progress}\nЗавершенные курсы:{self.finished_courses} '
+        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_student()}\nКурсы в процессе изучения:{self.courses_in_progress}\nЗавершенные курсы:{self.finished_courses} '
 
 
 
@@ -51,13 +59,13 @@ class Lecturer(Mentor):
     def average(self):
         total_subject_grades = 0
         count_subject_grades = 0
-        for subject, value in self.grades():
+        for subject, value in self.grades.items():
             total_subject_grades += sum(value)
             count_subject_grades += len(value)
         return total_subject_grades / count_subject_grades
 
     def __str__(self):
-        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average(lecturer.grades)}'
+        return  f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.average()}'
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -113,7 +121,9 @@ print(some_reviewer)
 # Имя: Some
 # Фамилия: Buddy
 
-some_lecturer = Lecturer('Some', 'Buddy')
+some_lecturer = Lecturer('Сергей', 'Быков')
+some_lecturer.courses_attached += ['Python', 'C++']
+print(student.rate_lecture(some_lecturer, 'Python', 9))
 
 print(some_lecturer)
 # Имя: Some
@@ -121,7 +131,11 @@ print(some_lecturer)
 # Средняя оценка за лекции: 9.9
 
 some_student = Student('Ruoy', 'Buddy', 'Ж')
-
+some_student.courses_in_progress += ['Python', 'Java']
+some_student.finished_courses += ['C++']
+cool_mentor.courses_attached += ['Java']
+cool_mentor.rate_hw(some_student, 'Python', 10)
+cool_mentor.rate_hw(some_student, 'Java', 7)
 print(some_student)
 # Имя: Ruoy
 # Фамилия: Eman
